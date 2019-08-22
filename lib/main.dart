@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'dart:async';
+import 'dart:convert';
+import 'package:hasura_connect/hasura_connect.dart';
 
 void main() => runApp(MyApp());
 
@@ -7,58 +10,100 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
-  final String title;
-
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
 
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
+  HasuraConnect coneccao = HasuraConnect('https://guiaunifei.herokuapp.com/v1/graphql');
+
+  var jsonFinal;
+  void initState(){
+    super.initState();
+    /*var json = coneccao.subscription(docSubdescription).map((data) =>
+        (data["data"]["teste"] as List)
+            .map((d) => ModelData.fromJson(d)).toList()
+    );*/
+
+    var snapshot = coneccao.subscription(docSubdescription, variables: {
+      // Condições ex.:
+      //"id": 1
     });
+
+    snapshot.stream.listen((data){
+      print('data: $data');
+      jsonFinal = data;
+    });
+    print('AJSONNNN: $snapshot');
+
+
+    print('jsonFinal: $jsonFinal');
   }
+
+  String docSubdescription = """ 
+    subscription {
+      teste {
+        id
+        nome
+      }
+    }
+  """;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text('GUIA UNIFEI'),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.display1,
-            ),
-          ],
+        child: FlatButton(
+          onPressed: (){
+            print("jsonFinal: ${jsonFinal['data']['teste'][0]['nome']}");
+          },
+          child: Container(
+            height: 50,
+            width: 50,
+            color: Colors.red,
+          ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
+
+
 }
+
+class ModelData {
+  int id;
+  String nome;
+
+  ModelData(this.id, this.nome);
+
+  ModelData.fromJson(Map<String, dynamic> json){
+    id = json['id'];
+    nome = json['nome'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['user_id'] = this.id;
+    data['user_email'] = this.nome;
+    return data;
+  }
+
+  @override
+  String toString() {
+    // TODO: implement toString
+    return "ModelData: $nome";
+    //return jsonFinal;
+  }
+
+}
+
