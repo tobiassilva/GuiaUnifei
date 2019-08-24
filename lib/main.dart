@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:guia_unifei/home/homeList.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'package:hasura_connect/hasura_connect.dart';
+
 
 void main() => runApp(MyApp());
 
@@ -22,39 +24,19 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
-  HasuraConnect coneccao = HasuraConnect('https://guiaunifei.herokuapp.com/v1/graphql');
 
-  var jsonFinal;
+  @override
   void initState(){
     super.initState();
-    /*var json = coneccao.subscription(docSubdescription).map((data) =>
-        (data["data"]["teste"] as List)
-            .map((d) => ModelData.fromJson(d)).toList()
-    );*/
-
-    var snapshot = coneccao.subscription(docSubdescription, variables: {
-      // Condições ex.:
-      //"id": 1
-    });
-
-    snapshot.stream.listen((data){
-      print('data: $data');
-      jsonFinal = data;
-    });
-    print('AJSONNNN: $snapshot');
 
 
-    print('jsonFinal: $jsonFinal');
   }
 
-  String docSubdescription = """ 
-    subscription {
-      teste {
-        id
-        nome
-      }
-    }
-  """;
+  void goHome() async {
+    Navigator.of(context).pushReplacement(new MaterialPageRoute(
+      builder: (context) => new homeList(),));
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -65,14 +47,27 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(
         child: FlatButton(
           onPressed: (){
-            print("jsonFinal: ${jsonFinal['data']['teste'][0]['nome']}");
+            Navigator.of(context).pushReplacement(new MaterialPageRoute(
+              builder: (context) => new homeList(),));
           },
           child: Container(
-            height: 50,
-            width: 50,
-            color: Colors.red,
+            padding: EdgeInsets.only(top: 15, bottom: 15),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(25),
+              color: Colors.blue,
+              //border: Border.all(width: 3, color: Colors.red)
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Flexible(
+                  child: Text('ENTRAR', style: TextStyle(color: Colors.white, fontSize: 20),),
+                ),
+              ],
+            ),
           ),
         ),
+
       ),
     );
   }
@@ -80,7 +75,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
 }
 
-class ModelData {
+/*class ModelData {
   int id;
   String nome;
 
@@ -105,5 +100,5 @@ class ModelData {
     //return jsonFinal;
   }
 
-}
+}*/
 
