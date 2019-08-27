@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:guia_unifei/local/locais.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'dart:async';
 
 class homeList extends StatefulWidget {
   @override
@@ -8,12 +10,22 @@ class homeList extends StatefulWidget {
 
 class _homeListState extends State<homeList> {
 
+  Completer<GoogleMapController> _controller = Completer();
+
+  static const LatLng _center = const LatLng(45.521563, -122.677433);
+
+  void _onMapCreated(GoogleMapController controller) {
+    _controller.complete(controller);
+  }
+
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
+        backgroundColor: Colors.white,
         appBar: AppBar(
+          backgroundColor: Color(0xFF2d3447),
           leading: IconButton(
               icon: Icon(Icons.menu),
               onPressed: (){
@@ -36,7 +48,7 @@ class _homeListState extends State<homeList> {
                   padding: EdgeInsets.only(top: 10, bottom: 10),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(25),
-                      color: Colors.blueAccent
+                      color: Colors.blue
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -46,6 +58,19 @@ class _homeListState extends State<homeList> {
                       ),
                     ],
                   ),
+                ),
+              ),
+
+              Container(
+                height: 250,
+                width: 250,
+                child: GoogleMap(
+                  onMapCreated: _onMapCreated,
+                  initialCameraPosition: CameraPosition(
+                    target: _center,
+                    zoom: 11.0,
+                  ),
+                  //myLocationEnabled: true,
                 ),
               ),
             ],
