@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:guia_unifei/home/homeList.dart';
 import 'dart:async';
 import 'dart:convert';
@@ -27,48 +28,102 @@ class _MyHomePageState extends State<MyHomePage> {
 
   HasuraConnect conexao = HasuraConnect('https://guiaunifei.herokuapp.com/v1/graphql');
 
+  bool leituraBanco = false;
+
   @override
-  void initState(){
+  void initState() {
     super.initState();
-    getLocais();
-    getImgsLocais();
+    this.getLocais();
+    this.getImgsLocais();
+    this.getTipoLocais();
+    this.getEspacos();
+    this.getTipoEspaco();
 
     print('aaaaaaaaaaaaa');
 
 
   }
 
-  void getLocais(){
+  ///RECEBE O JSON DOS LOCAIS
+  Future<void> getLocais() async {
     var snapshot = conexao.subscription(localSubdescription, variables: {
-      // Condições ex.:
-      //"id": 1
     });
 
     snapshot.stream.listen((data){
       print('data: $data');
       setState(() {
         globals.jsonLocal = data['data'];
-        print(globals.jsonLocal['local'].length);
       });
     });
   }
 
   ///RECEBE O JSON DAS IMAGENS DO LOCAL
-  void getImgsLocais() {
+  Future<void> getImgsLocais() async {
 
     var snapshot1 = conexao.subscription(imgLocalSubdescription, variables: {
 
     });
-    //var snapshot = data["data"]['imgslocal'];
-
-    print('AAAAAAAAAAAA');
 
     snapshot1.stream.listen((data) {
       print('data: $data');
       setState(() {
         globals.jsonImgs = data['data'];
-        print('jsonImgs: ${globals.jsonImgs}');
-        print(globals.jsonImgs['imgslocal'].length);
+      });
+    });
+
+  }
+
+  ///RECEBE O JSON DOS TIPOS DE LOCAIS
+  Future<void> getTipoLocais() async {
+
+    var snapshot1 = conexao.subscription(tipoLocalSubdescription, variables: {
+
+    });
+
+    snapshot1.stream.listen((data) {
+      print('data: $data');
+      setState(() {
+        globals.jsonTipoLocal = data['data'];
+        print('jsonTipoLocal: ${globals.jsonTipoLocal}');
+        print(globals.jsonTipoLocal['tipolocal'].length);
+        leituraBanco = true;
+      });
+    });
+
+  }
+
+  ///RECEBE O JSON DOS ESPAÇOS
+  Future<void> getEspacos() async {
+
+    var snapshot1 = conexao.subscription(espacoSubdescription, variables: {
+
+    });
+
+    snapshot1.stream.listen((data) {
+      print('data: $data');
+      setState(() {
+        globals.jsonEspaco = data['data'];
+        print('jsonEspaco: ${globals.jsonEspaco}');
+        print(globals.jsonEspaco['espaco'].length);
+      });
+    });
+
+  }
+
+  ///RECEBE O JSON DOS TIPOS DE ESPACOS
+  Future<void> getTipoEspaco() async {
+
+    var snapshot1 = conexao.subscription(tipoEspacoSubdescription, variables: {
+
+    });
+
+    snapshot1.stream.listen((data) {
+      print('data: $data');
+      setState(() {
+        globals.jsonTipoEspaco = data['data'];
+        print('jsonTipoEspaco: ${globals.jsonTipoEspaco}');
+        print(globals.jsonTipoEspaco['tipoespaco'].length);
+        leituraBanco = true;
       });
     });
 
@@ -100,6 +155,36 @@ class _MyHomePageState extends State<MyHomePage> {
       }
     """;
 
+  String tipoLocalSubdescription = """
+      subscription {
+        tipolocal {
+          codigo
+          nome
+        }
+      }
+    """;
+
+  String espacoSubdescription = """
+      subscription {
+        espaco {
+          codigo
+          codlocal
+          codtespaco
+          nome
+          andar
+        }
+      }
+    """;
+
+  String tipoEspacoSubdescription = """
+      subscription {
+        tipoespaco {
+          codigo
+          tipo
+        }
+      }
+    """;
+
   void goHome() async {
     Navigator.of(context).pushReplacement(new MaterialPageRoute(
       builder: (context) => new homeList(),));
@@ -111,8 +196,13 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('GUIA UNIFEI'),
+        centerTitle: true,
       ),
-      body: Center(
+      body: leituraBanco == false ? Center(
+        child: SpinKitCubeGrid(
+          color: Colors.lightBlue,
+        ),
+      ) : Center(
         child: FlatButton(
           onPressed: (){
             Navigator.of(context).pushReplacement(new MaterialPageRoute(

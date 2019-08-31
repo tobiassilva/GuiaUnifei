@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:guia_unifei/globals.dart' as globals;
-import 'dart:math';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'dart:async';
+import 'package:flutter_swiper/flutter_swiper.dart';
 
 class locaisDetalhes extends StatefulWidget {
   var jsonLocalAtual;
@@ -13,8 +12,8 @@ class locaisDetalhes extends StatefulWidget {
   _locaisDetalhesState createState() => _locaisDetalhesState(jsonLocalAtual);
 }
 
-var cardAspectRatio = 12.0 / 16.0;
-var widgetAspectRatio = cardAspectRatio * 1.2;
+//var cardAspectRatio = 12.0 / 16.0;
+//var widgetAspectRatio = cardAspectRatio * 1.2;
 List imgsList = List();
 
 class _locaisDetalhesState extends State<locaisDetalhes> {
@@ -22,19 +21,14 @@ class _locaisDetalhesState extends State<locaisDetalhes> {
 
   _locaisDetalhesState(this.jsonLocalAtual);
 
-  Completer<GoogleMapController> _controller = Completer();
 
-  static const LatLng _center = const LatLng(45.521563, -122.677433);
-
-  void _onMapCreated(GoogleMapController controller) {
-    _controller.complete(controller);
-  }
 
 
   @override
   void initState() {
     super.initState();
 
+    super.initState();
     encontraImgs();
   }
 
@@ -51,20 +45,135 @@ class _locaisDetalhesState extends State<locaisDetalhes> {
   }
 
 
-  var currentPage = imgsList.length - 1.0;
+  //var currentPage = imgsList.length - 1.0;
 
   @override
   Widget build(BuildContext context) {
-    PageController controller = PageController(
+    /*PageController controller = PageController(
         initialPage: imgsList.length - 1);
     controller.addListener(() {
       setState(() {
         currentPage = controller.page;
       });
-    });
+    });*/
 
     return MaterialApp(
       home: Scaffold(
+        backgroundColor: Color.fromRGBO(242, 242, 242, 1),
+        body: SingleChildScrollView(
+          physics: NeverScrollableScrollPhysics(),
+          child:  Stack(
+
+                children: <Widget>[
+                  Container(
+                    height: MediaQuery.of(context).size.height/1.8,
+                    child: Container(
+                      //borderRadius: new BorderRadius.circular(30),
+                      child: Image.network('${jsonLocalAtual['imgcapa']}',
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+
+                  Container(
+                    color: Colors.black.withOpacity(0.2),
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height/1.8,
+
+                  ),
+
+                  Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height,
+                    child: ListView(
+                      shrinkWrap: true,
+                      physics: ScrollPhysics(),
+                        children: <Widget>[
+
+                          Container(
+                            child: Stack(
+                              children: <Widget>[
+                                ///BOTÃO VOLTAR
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: <Widget>[
+                                    IconButton(
+                                        icon: Icon(Icons.arrow_back, color: Colors.white, size: 35,),
+                                        onPressed: (){
+                                          Navigator.pop(context);
+                                        }
+                                    ),
+                                  ],
+                                ),
+
+                                Column(
+                                  children: <Widget>[
+                                    Container(
+                                      padding: EdgeInsets.only(left: 30, right: 30),
+
+                                      width: MediaQuery.of(context).size.width,
+                                      height: MediaQuery.of(context).size.height/2.2,
+                                      child: Center(
+                                        child: Text(jsonLocalAtual['nome'],
+                                          style: TextStyle(color: Colors.white,
+                                            fontSize: 25,
+                                            //fontWeight: FontWeight.bold
+                                          ),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ),
+                                    ),
+
+                                    Material(
+                                      elevation: 5.0,
+
+                                      borderRadius: BorderRadius.circular(15),
+
+
+                                      child: Container(
+                                        width: MediaQuery.of(context).size.width/1.3,
+                                        height: MediaQuery.of(context).size.width/1.3,
+                                        padding: EdgeInsets.all(15),
+                                        child: Swiper(
+                                          itemCount: imgsList.length,
+                                          itemBuilder: (BuildContext context, int index){
+                                            print(imgsList[index]);
+                                            return Container(
+                                              margin: EdgeInsets.only(left: 5, right: 5),
+                                              child: ClipRRect(
+                                                borderRadius: BorderRadius.circular(15),
+                                                child: new Image.network(imgsList[index]['imagem'],fit: BoxFit.cover,),
+                                              ),
+                                            );
+                                          },
+                                          pagination: SwiperPagination(),
+                                        ),
+                                      ),
+                                    ),
+
+                                    Text(jsonLocalAtual['historia'])
+                                  ],
+                                ),
+
+                              ],
+                            )
+                          ),
+
+
+
+
+                        ],
+                      ),
+                  ),
+
+                ],
+              ),
+
+        ),
+      ),
+
+      /*Scaffold(
         appBar: AppBar(
           backgroundColor: Color(0xFF2d3447),
           leading: IconButton(
@@ -159,12 +268,12 @@ class _locaisDetalhesState extends State<locaisDetalhes> {
             ],
           ),
         ),
-      ),
+      ),*/
     );
   }
 }
 
-class CardScrollWidget extends StatelessWidget {
+/*class CardScrollWidget extends StatelessWidget {
   var currentPage;
 
   CardScrollWidget(this.currentPage);
@@ -268,4 +377,4 @@ class CardScrollWidget extends StatelessWidget {
       }),
     );
   }
-}
+}*/
