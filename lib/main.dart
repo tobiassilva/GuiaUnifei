@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:guia_unifei/home/homeList.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'package:hasura_connect/hasura_connect.dart';
+import 'globals.dart' as globals;
+
 
 void main() => runApp(MyApp());
 
@@ -22,57 +26,206 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
-  HasuraConnect coneccao = HasuraConnect('https://guiaunifei.herokuapp.com/v1/graphql');
+  HasuraConnect conexao = HasuraConnect('https://guiaunifei.herokuapp.com/v1/graphql');
 
-  var jsonFinal;
-  void initState(){
+  bool leituraBanco = false;
+
+  @override
+  void initState() {
     super.initState();
-    /*var json = coneccao.subscription(docSubdescription).map((data) =>
-        (data["data"]["teste"] as List)
-            .map((d) => ModelData.fromJson(d)).toList()
-    );*/
+    this.getLocais();
+    this.getImgsLocais();
+    this.getTipoLocais();
+    this.getEspacos();
+    this.getTipoEspaco();
 
-    var snapshot = coneccao.subscription(docSubdescription, variables: {
-      // Condições ex.:
-      //"id": 1
+    print('aaaaaaaaaaaaa');
+
+
+  }
+
+  ///RECEBE O JSON DOS LOCAIS
+  Future<void> getLocais() async {
+    var snapshot = conexao.subscription(localSubdescription, variables: {
     });
 
     snapshot.stream.listen((data){
       print('data: $data');
-      jsonFinal = data;
+      setState(() {
+        globals.jsonLocal = data['data'];
+      });
     });
-    print('AJSONNNN: $snapshot');
-
-
-    print('jsonFinal: $jsonFinal');
   }
 
-  String docSubdescription = """ 
+  ///RECEBE O JSON DAS IMAGENS DO LOCAL
+  Future<void> getImgsLocais() async {
+
+    var snapshot1 = conexao.subscription(imgLocalSubdescription, variables: {
+
+    });
+
+    snapshot1.stream.listen((data) {
+      print('data: $data');
+      setState(() {
+        globals.jsonImgs = data['data'];
+      });
+    });
+
+  }
+
+  ///RECEBE O JSON DOS TIPOS DE LOCAIS
+  Future<void> getTipoLocais() async {
+
+    var snapshot1 = conexao.subscription(tipoLocalSubdescription, variables: {
+
+    });
+
+    snapshot1.stream.listen((data) {
+      print('data: $data');
+      setState(() {
+        globals.jsonTipoLocal = data['data'];
+        print('jsonTipoLocal: ${globals.jsonTipoLocal}');
+        print(globals.jsonTipoLocal['tipolocal'].length);
+        leituraBanco = true;
+      });
+    });
+
+  }
+
+  ///RECEBE O JSON DOS ESPAÇOS
+  Future<void> getEspacos() async {
+
+    var snapshot1 = conexao.subscription(espacoSubdescription, variables: {
+
+    });
+
+    snapshot1.stream.listen((data) {
+      print('data: $data');
+      setState(() {
+        globals.jsonEspaco = data['data'];
+        print('jsonEspaco: ${globals.jsonEspaco}');
+        print(globals.jsonEspaco['espaco'].length);
+      });
+    });
+
+  }
+
+  ///RECEBE O JSON DOS TIPOS DE ESPACOS
+  Future<void> getTipoEspaco() async {
+
+    var snapshot1 = conexao.subscription(tipoEspacoSubdescription, variables: {
+
+    });
+
+    snapshot1.stream.listen((data) {
+      print('data: $data');
+      setState(() {
+        globals.jsonTipoEspaco = data['data'];
+        print('jsonTipoEspaco: ${globals.jsonTipoEspaco}');
+        print(globals.jsonTipoEspaco['tipoespaco'].length);
+        leituraBanco = true;
+      });
+    });
+
+  }
+
+  String localSubdescription = """ 
     subscription {
-      teste {
-        id
+      local {
+        anoconstrucao
+        codigo
+        codtlocal
+        imgcapa
         nome
+        historia
+        latitude
+        longitude
       }
     }
   """;
+
+  String imgLocalSubdescription = """
+      subscription {
+        imgslocal {
+          codigo
+          codlocal
+          imagem
+          nome
+        }
+      }
+    """;
+
+  String tipoLocalSubdescription = """
+      subscription {
+        tipolocal {
+          codigo
+          nome
+        }
+      }
+    """;
+
+  String espacoSubdescription = """
+      subscription {
+        espaco {
+          codigo
+          codlocal
+          codtespaco
+          nome
+          andar
+        }
+      }
+    """;
+
+  String tipoEspacoSubdescription = """
+      subscription {
+        tipoespaco {
+          codigo
+          tipo
+        }
+      }
+    """;
+
+  void goHome() async {
+    Navigator.of(context).pushReplacement(new MaterialPageRoute(
+      builder: (context) => new homeList(),));
+  }
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('GUIA UNIFEI'),
+        centerTitle: true,
       ),
-      body: Center(
+      body: leituraBanco == false ? Center(
+        child: SpinKitCubeGrid(
+          color: Colors.lightBlue,
+        ),
+      ) : Center(
         child: FlatButton(
           onPressed: (){
-            print("jsonFinal: ${jsonFinal['data']['teste'][0]['nome']}");
+            Navigator.of(context).pushReplacement(new MaterialPageRoute(
+              builder: (context) => new homeList(),));
           },
           child: Container(
-            height: 50,
-            width: 50,
-            color: Colors.red,
+            padding: EdgeInsets.only(top: 15, bottom: 15),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(25),
+              color: Colors.blue,
+              //border: Border.all(width: 3, color: Colors.red)
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Flexible(
+                  child: Text('ENTRAR', style: TextStyle(color: Colors.white, fontSize: 20),),
+                ),
+              ],
+            ),
           ),
         ),
+
       ),
     );
   }
@@ -80,7 +233,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
 }
 
-class ModelData {
+/*class ModelData {
   int id;
   String nome;
 
@@ -105,5 +258,5 @@ class ModelData {
     //return jsonFinal;
   }
 
-}
+}*/
 
