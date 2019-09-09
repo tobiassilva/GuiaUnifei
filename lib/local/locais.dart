@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:guia_unifei/local/LocaisDetalhes.dart';
 import 'dart:async';
@@ -6,16 +7,20 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:guia_unifei/globals.dart' as globals;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:guia_unifei/mapa.dart';
+import 'package:localstorage/localstorage.dart';
 
 class locaisList extends StatefulWidget {
   @override
   _locaisListState createState() => _locaisListState();
 }
 
+final LocalStorage storage = new LocalStorage("json");
+
 class _locaisListState extends State<locaisList> {
 
   void initState(){
     super.initState();
+
 
   }
 
@@ -87,7 +92,7 @@ class _locaisListState extends State<locaisList> {
                                 ),
                                 child: ClipRRect(
                                   borderRadius: new BorderRadius.circular(30),
-                                  child: Image.network('${globals.jsonLocal['local'][index]['imgcapa']}',
+                                  child: Image(image: new CachedNetworkImageProvider("${globals.jsonLocal['local'][index]['imgcapa']}"),/*Image.network('${globals.jsonLocal['local'][index]['imgcapa']}',*/
                                     fit: BoxFit.cover,
                                   ),
                                 ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:guia_unifei/espaco/espacoDetalhe.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class espacoPage extends StatefulWidget {
   var jsonEspacos;
@@ -28,7 +29,6 @@ class _espacoPageState extends State<espacoPage> {
     for(int i = 0; i<jsonEspacos['espaco'].length; i++){
       items.add('${jsonEspacos['espaco'][i]['nome']}');
     }
-    print(items);
     for(int i = 0; i<jsonEspacos['espaco'].length; i++){
       itemsOrigin.add('${jsonEspacos['espaco'][i]['nome']}'); ///Não deve ser editada
     }
@@ -68,7 +68,7 @@ class _espacoPageState extends State<espacoPage> {
         Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => espacoDetalhe(jsonEspacos['espaco'][i]))
         );
-        print('jsonEspacos ESCOLHIDO: ${jsonEspacos['espaco'][i]}');
+
       }
     }
   }
