@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:guia_unifei/globals.dart' as globals;
 import 'dart:async';
@@ -29,8 +30,8 @@ class _locaisDetalhesState extends State<locaisDetalhes> {
   void initState() {
     super.initState();
 
-    super.initState();
     encontraImgs();
+
   }
 
   /// Encontra as imgs referentes ao local escolhido
@@ -68,9 +69,10 @@ class _locaisDetalhesState extends State<locaisDetalhes> {
                 children: <Widget>[
                   Container(
                     height: MediaQuery.of(context).size.height/1.8,
+
                     child: Container(
                       //borderRadius: new BorderRadius.circular(30),
-                      child: Image.network('${jsonLocalAtual['imgcapa']}',
+                      child: Image(image: new CachedNetworkImageProvider("${jsonLocalAtual['imgcapa']}"),//Image.network('${jsonLocalAtual['imgcapa']}',
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -147,7 +149,6 @@ class _locaisDetalhesState extends State<locaisDetalhes> {
                                         child: Swiper(
                                           itemCount: imgsList.length,
                                           itemBuilder: (BuildContext context, int index){
-                                            print(imgsList[index]);
                                             return Container(
                                                 margin: EdgeInsets.only(left: 5, right: 5),
                                                 child: ClipRRect(
@@ -159,8 +160,9 @@ class _locaisDetalhesState extends State<locaisDetalhes> {
                                                             Navigator.push(context, MaterialPageRoute(
                                                               builder: (context) => new imageView(index),));
                                                           },
-                                                          child: new Image.network(imgsList[index]['imagem'],fit: BoxFit.cover,),
-                                                        )
+                                                          child: Image(image: new CachedNetworkImageProvider("${imgsList[index]['imagem']}"),//new Image.network(imgsList[index]['imagem'],
+                                                            fit: BoxFit.cover,),
+                                                        ),
                                                   ),
                                                 ),
 
@@ -178,15 +180,18 @@ class _locaisDetalhesState extends State<locaisDetalhes> {
                                       },
                                       
                                       child: Container(
+                                        width: 150,
+                                        padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
                                         decoration: BoxDecoration(
                                           color: Colors.blue,
                                           borderRadius: BorderRadius.circular(30),
-
+                                          border: Border.all(color: Color(0xFF2d3447),width: 1)
                                         ),
                                         child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceAround,
                                           children: <Widget>[
                                             Container(
-                                              child: Text('SALAS/LABS'),
+                                              child: Text('SALAS/LABS', style: TextStyle(color: Colors.white),),
                                             ),
                                             Icon(Icons.fast_forward, color: Colors.white,),
                                           ],
@@ -194,7 +199,36 @@ class _locaisDetalhesState extends State<locaisDetalhes> {
                                       ),
                                     ),
 
-                                    Text(jsonLocalAtual['historia'])
+                                    Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.only(
+                                            topRight: Radius.circular(25),
+                                            topLeft: Radius.circular(25)
+                                        ),
+                                        color: Color.fromRGBO(242, 242, 242, 1),
+                                      ),
+                                      child: Column(
+                                        children: <Widget>[
+                                          Divider(
+                                            height: 20,
+                                            color: Colors.transparent,
+                                          ),
+                                          Text('DESCRIÇÃO', style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),),
+                                          Divider(
+                                            height: 20,
+                                            color: Colors.transparent,
+                                          ),
+                                          Container(
+                                            padding: EdgeInsets.only(left: 15, right: 15),
+                                            child: Text(jsonLocalAtual['historia'],
+                                              style: TextStyle(fontSize: 20,
+                                              ),
+                                              textAlign: TextAlign.justify,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
                                   ],
                                 ),
 
