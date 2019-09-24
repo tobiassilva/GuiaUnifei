@@ -66,8 +66,10 @@ class _locaisListState extends State<locaisList> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      color: Colors.transparent,
           child: ListView(
             children: <Widget>[
+
               Container(
                 height: MediaQuery.of(context).size.height,
                 width: MediaQuery.of(context).size.width,
@@ -79,9 +81,11 @@ class _locaisListState extends State<locaisList> {
                   ),
                 ) :
                 ListView(
-                  physics: ScrollPhysics(),
                   shrinkWrap: true,
                   children: <Widget>[
+                    Divider(
+                      height: 210,
+                    ),
 
                     Container(
                       height: 30,
@@ -180,6 +184,7 @@ class _locaisListState extends State<locaisList> {
     return
       Column(
         children: <Widget>[
+
           ListView.builder(
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
@@ -289,7 +294,8 @@ class _locaisListState extends State<locaisList> {
           ),
 
           Divider(
-            height: 150,
+            height: 50,
+            color: Colors.transparent,
           ),
         ],
       );
@@ -298,116 +304,124 @@ class _locaisListState extends State<locaisList> {
 
   ///TIPO LOCAL
   Widget locaisTipo(){
-    return locaisEsc.length == 0 ? Container() :
-      ListView.builder(
-          shrinkWrap: true,
-          physics: NeverScrollableScrollPhysics(),
-          itemCount: locaisEsc.length,
-          itemBuilder: (BuildContext context, index){
-            return Container(
+    return
+      locaisEsc.length == 0 ? Container() : Column(
+      children: <Widget>[
+          ListView.builder(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              itemCount: locaisEsc.length,
+              itemBuilder: (BuildContext context, index){
+                return Container(
 
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(30),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black26,
-                    blurRadius: 20.0, // has the effect of softening the shadow
-                    spreadRadius: 2.0, // has the effect of extending the shadow
-                    offset: Offset(
-                      10.0, // horizontal, move right 10
-                      10.0, // vertical, move down 10
-                    ),
-                  )
-                ],
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(30),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black26,
+                        blurRadius: 20.0, // has the effect of softening the shadow
+                        spreadRadius: 2.0, // has the effect of extending the shadow
+                        offset: Offset(
+                          10.0, // horizontal, move right 10
+                          10.0, // vertical, move down 10
+                        ),
+                      )
+                    ],
 
-              ),
-              margin: EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 10),
-              child: FlatButton(
-                padding: EdgeInsets.all(0),
-                onPressed: (){
-                  Navigator.of(context).push(new MaterialPageRoute(
-                    builder: (context) => new locaisDetalhes(locaisEsc[index]),));
-                },
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: <Widget>[
-                    Container(
-                      height: 120,
-                      width: 120,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(30),
-                        //color: Colors.red
-                      ),
-                      child: ClipRRect(
-                        borderRadius: new BorderRadius.circular(30),
-                        child: Image(image: new CachedNetworkImageProvider("${locaisEsc[index]['imgcapa']}"),/*Image.network('${globals.jsonLocal['local'][index]['imgcapa']}',*/
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
-                    Flexible(
-                      child: Container(
-                        padding: EdgeInsets.only(left: 10),
-                        child: Column(
-                          children: <Widget>[
-                            Text('${locaisEsc[index]['nome']}',
-                              style: TextStyle(),),
-                          ],
-                        ),
-                      ),
-                    ),
-
-                    FlatButton(
-                      padding: EdgeInsets.only(left: 15, top: 0, right: 0),
-                      onPressed: (){
-                        setState(() {
-                          Navigator.of(context).push(new MaterialPageRoute(
-                            builder: (context) => new mapaPage(
-                                locaisEsc[index]['nome'],
-                                locaisEsc[index]['latitude'],
-                                locaisEsc[index]['longitude']
-                            ),));
-                          //_mapaDialog(globals.jsonLocal['local'][index]);
-                        });
-                      },
-                      child: Container(
-                        height: 120,
-                        width: 88,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.only(topRight: Radius.circular(30), bottomRight: Radius.circular(30)),
-                          color: Colors.blue,
-                        ),
-                        child: ClipRRect(
-                          borderRadius: new BorderRadius.circular(30),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Icon(Icons.map, color: Colors.white, size: 30,),
-                              Flexible(
-                                child: Text('como', textAlign: TextAlign.center,
-                                  style: TextStyle(color: Colors.white, fontSize: 16),
-                                ),
-                              ),
-                              Flexible(
-                                child: Text('chegar', textAlign: TextAlign.center,
-                                  style: TextStyle(color: Colors.white, fontSize: 16),
-                                ),
-                              ),
-                            ],
+                  ),
+                  margin: EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 10),
+                  child: FlatButton(
+                    padding: EdgeInsets.all(0),
+                    onPressed: (){
+                      Navigator.of(context).push(new MaterialPageRoute(
+                        builder: (context) => new locaisDetalhes(locaisEsc[index]),));
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: <Widget>[
+                        Container(
+                          height: 120,
+                          width: 120,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30),
+                            //color: Colors.red
+                          ),
+                          child: ClipRRect(
+                            borderRadius: new BorderRadius.circular(30),
+                            child: Image(image: new CachedNetworkImageProvider("${locaisEsc[index]['imgcapa']}"),/*Image.network('${globals.jsonLocal['local'][index]['imgcapa']}',*/
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
-                      ),
+                        Flexible(
+                          child: Container(
+                            padding: EdgeInsets.only(left: 10),
+                            child: Column(
+                              children: <Widget>[
+                                Text('${locaisEsc[index]['nome']}',
+                                  style: TextStyle(),),
+                              ],
+                            ),
+                          ),
+                        ),
+
+                        FlatButton(
+                          padding: EdgeInsets.only(left: 15, top: 0, right: 0),
+                          onPressed: (){
+                            setState(() {
+                              Navigator.of(context).push(new MaterialPageRoute(
+                                builder: (context) => new mapaPage(
+                                    locaisEsc[index]['nome'],
+                                    locaisEsc[index]['latitude'],
+                                    locaisEsc[index]['longitude']
+                                ),));
+                              //_mapaDialog(globals.jsonLocal['local'][index]);
+                            });
+                          },
+                          child: Container(
+                            height: 120,
+                            width: 88,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.only(topRight: Radius.circular(30), bottomRight: Radius.circular(30)),
+                              color: Colors.blue,
+                            ),
+                            child: ClipRRect(
+                              borderRadius: new BorderRadius.circular(30),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Icon(Icons.map, color: Colors.white, size: 30,),
+                                  Flexible(
+                                    child: Text('como', textAlign: TextAlign.center,
+                                      style: TextStyle(color: Colors.white, fontSize: 16),
+                                    ),
+                                  ),
+                                  Flexible(
+                                    child: Text('chegar', textAlign: TextAlign.center,
+                                      style: TextStyle(color: Colors.white, fontSize: 16),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+
+
+                      ],
                     ),
-
-
-                  ],
-                ),
-              ),
-              //Text('Item $index: ${jsonLocal['local'][index]['historia']}'),
-            );
-          }
-      );
+                  ),
+                  //Text('Item $index: ${jsonLocal['local'][index]['historia']}'),
+                );
+              }
+          ),
+        Divider(
+          height: 50,
+          color: Colors.transparent,
+        ),
+      ],
+    );
   }
 
 }
