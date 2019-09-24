@@ -78,7 +78,7 @@ class _homeListState extends State<homeList> {
                 children: <Widget>[
 
                   locaisList(),
-                  espacoPage(globals.jsonEspaco),
+                  espacoPage(globals.jsonEspaco, true),
 
 
                 ],

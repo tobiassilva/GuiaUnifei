@@ -396,6 +396,14 @@ class _MyHomePageState extends State<MyHomePage> {
         historia
         latitude
         longitude
+        diretor
+        vicediretor
+        secretaria
+        email
+        telefone
+        telefonede
+        telefone2
+        telefonede2
       }
     }
   """;
