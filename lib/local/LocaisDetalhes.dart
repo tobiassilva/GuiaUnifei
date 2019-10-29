@@ -24,6 +24,7 @@ class _locaisDetalhesState extends State<locaisDetalhes> {
   var jsonLocalAtual;
   var espacosLocal = {};
   List espacosLocalList = List();
+  int infoSelec = 0;
 
   _locaisDetalhesState(this.jsonLocalAtual);
 
@@ -162,13 +163,13 @@ class _locaisDetalhesState extends State<locaisDetalhes> {
 
                                                           child: GestureDetector(
                                                             onTap: (){
-                                                              Navigator.push(context, MaterialPageRoute(
+                                                              Navigator.of(context).push(MaterialPageRoute(
                                                                 builder: (context) => new imageView(index),));
                                                             },
                                                             child: Image(image: new CachedNetworkImageProvider("${imgsList[index]['imagem']}"),//new Image.network(imgsList[index]['imagem'],
                                                               fit: BoxFit.cover,),
                                                           ),
-                                                    ),
+                                                      ),
                                                   ),
 
                                               );
@@ -178,243 +179,15 @@ class _locaisDetalhesState extends State<locaisDetalhes> {
                                         ),
                                       ),
 
-                                      FlatButton(
-                                        padding: EdgeInsets.all(0),
-                                        onPressed: (){
-                                          //homeList();
-                                          var aux;
-                                          List salasList = List();
-                                          espacosLocalList.clear();
-
-                                          print(globals.jsonEspaco['espaco'].length);
-                                          for(int i=0; i<globals.jsonEspaco['espaco'].length; i++){
-                                            print('Codigo Local: ${globals.jsonEspaco['espaco'][i]['codlocal']}');
-                                            print('Codigo ataual: ${jsonLocalAtual['codigo']}');
-                                            if(jsonLocalAtual['codigo'] == globals.jsonEspaco['espaco'][i]['codlocal']){
-
-                                              espacosLocalList.add(globals.jsonEspaco['espaco'][i]);
-                                            }
-
-                                          }
-
-                                          espacosLocal['espaco'] = espacosLocalList;
-                                          print('espacosLocal: $espacosLocal');
-
-                                          Navigator.push(context,
-                                            MaterialPageRoute(builder: (context) => espacoPage(espacosLocal, false))
-                                          );
-                                        },
-
-                                        child: Container(
-                                          width: 150,
-                                          padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
-                                          decoration: BoxDecoration(
-                                            color: Colors.blue,
-                                            borderRadius: BorderRadius.circular(30),
-                                            border: Border.all(color: Color(0xFF2d3447),width: 1)
-                                          ),
-                                          child: Row(
-                                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                            children: <Widget>[
-                                              Container(
-                                                child: Text('SALAS/LABS', style: TextStyle(color: Colors.white),),
-                                              ),
-                                              Icon(Icons.fast_forward, color: Colors.white,),
-                                            ],
-                                          ),
-                                        ),
+                                      Divider(
+                                        height: 20,
+                                        color: Colors.transparent,
                                       ),
 
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.only(
-                                              topRight: Radius.circular(25),
-                                              topLeft: Radius.circular(25)
-                                          ),
-                                          color: Color.fromRGBO(242, 242, 242, 1),
-                                        ),
-                                        child: Column(
-                                          children: <Widget>[
-                                            Divider(
-                                              height: 20,
-                                              color: Colors.transparent,
-                                            ),
-                                            Text('DESCRIÇÃO', style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),),
-                                            Divider(
-                                              height: 20,
-                                              color: Colors.transparent,
-                                            ),
-                                            Container(
-                                              padding: EdgeInsets.only(left: 15, right: 15),
-                                              child: Text(jsonLocalAtual['historia'],
-                                                style: TextStyle(fontSize: 20,
-                                                ),
-                                                textAlign: TextAlign.justify,
-                                              ),
-                                            ),
-
-                                            /// VERIFICA SE TEM DIRETOR
-                                            jsonLocalAtual['diretor'] == null ? Container() :
-
-                                            Container(
-                                              padding: EdgeInsets.only(left: 15, right: 15, top: 15),
-                                              child: Text('Diretor: ${jsonLocalAtual['diretor']}',
-                                                style: TextStyle(fontSize: 20,
-                                                ),
-                                                textAlign: TextAlign.justify,
-                                              ),
-                                            ),
-
-                                            /// VERIFICA SE TEM VICE-DIRETOR
-                                            jsonLocalAtual['vicediretor'] == null ? Container() :
-
-                                            Container(
-                                              padding: EdgeInsets.only(left: 15, right: 15, top: 15),
-                                              child: Text('Vice-Diretor: ${jsonLocalAtual['vicediretor']}',
-                                                style: TextStyle(fontSize: 20,
-                                                ),
-                                                textAlign: TextAlign.justify,
-                                              ),
-                                            ),
-
-                                            /// VERIFICA SE TEM SECRETÁRIA
-                                            jsonLocalAtual['secretaria'] == null ? Container() :
-
-                                            Container(
-                                              padding: EdgeInsets.only(left: 15, right: 15, top: 15),
-                                              child: Text('Secretária: ${jsonLocalAtual['secretaria']}',
-                                                style: TextStyle(fontSize: 20,
-                                                ),
-                                                textAlign: TextAlign.justify,
-                                              ),
-                                            ),
-
-                                            /// VERIFICA SE TEM EMAIL
-                                            jsonLocalAtual['email'] == null ? Container() :
-
-                                            Container(
-                                              padding: EdgeInsets.only(left: 15, right: 15, top: 15),
-                                              child: Text('Email: ${jsonLocalAtual['email']}',
-                                                style: TextStyle(fontSize: 20,
-                                                ),
-                                                textAlign: TextAlign.justify,
-                                              ),
-                                            ),
-
-                                            /// VERIFICA SE TEM TELEFONEDE
-                                            jsonLocalAtual['telefonede'] == null ? Container() :
-
-                                            Container(
-                                              padding: EdgeInsets.only(left: 15, right: 15, top: 15),
-                                              child: Text('Contato 1: ${jsonLocalAtual['telefonede']}',
-                                                style: TextStyle(fontSize: 20,
-                                                ),
-                                                textAlign: TextAlign.justify,
-                                              ),
-                                            ),
-
-                                            /// VERIFICA SE TEM TELEFONE
-                                            jsonLocalAtual['telefone'] == null ? Container() :
-
-                                            Container(
-                                              height: 40,
-                                              margin: EdgeInsets.only(
-                                                  left: 30, right: 30, bottom: 4, top: 15),
-                                              decoration: BoxDecoration(
-                                                //color: Color.fromRGBO(19, 104, 136, 1),
-                                                borderRadius: BorderRadius.circular(30),
-                                                border:
-                                                Border.all(color: Colors.green, width: 3.0),
-                                              ),
-                                              child: FlatButton(
-                                                onPressed: () async {
-                                                  print('${jsonLocalAtual['telefone']}');
-                                                  if (await canLaunch(
-                                                      'tel://+55${jsonLocalAtual['telefone']}')) {
-                                                    await launch(
-                                                        'tel://+55${jsonLocalAtual['telefone']}');
-                                                  } else {
-                                                    throw 'Could not launch';
-                                                  }
-                                                },
-                                                child: Row(
-                                                  //crossAxisAlignment: CrossAxisAlignment.center,
-                                                  mainAxisAlignment: MainAxisAlignment.center,
-                                                  children: [
-                                                    Icon(
-                                                      Icons.phone,
-                                                      color: Colors.green,
-                                                    ),
-                                                    Text(
-                                                      'ligar',
-                                                      style: TextStyle(color: Colors.green),
-                                                    )
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-
-                                            /// VERIFICA SE TEM TELEFONEDE 2
-                                            jsonLocalAtual['telefonede2'] == null ? Container() :
-
-                                            Container(
-                                              padding: EdgeInsets.only(left: 15, right: 15, top: 15),
-                                              child: Text('Contato 2: ${jsonLocalAtual['telefonede2']}',
-                                                style: TextStyle(fontSize: 20,
-                                                ),
-                                                textAlign: TextAlign.justify,
-                                              ),
-                                            ),
-
-                                            /// VERIFICA SE TEM TELEFONE 2
-                                            jsonLocalAtual['telefone2'] == null ? Container() :
-
-                                            Container(
-                                              height: 40,
-                                              margin: EdgeInsets.only(
-                                                  left: 30, right: 30, bottom: 4, top: 15),
-                                              decoration: BoxDecoration(
-                                                //color: Color.fromRGBO(19, 104, 136, 1),
-                                                borderRadius: BorderRadius.circular(30),
-                                                border:
-                                                Border.all(color: Colors.green, width: 3.0),
-                                              ),
-                                              child: FlatButton(
-                                                onPressed: () async {
-                                                  print('${jsonLocalAtual['telefone2']}');
-                                                  if (await canLaunch(
-                                                      'tel://+55${jsonLocalAtual['telefone2']}')) {
-                                                    await launch(
-                                                        'tel://+55${jsonLocalAtual['telefone2']}');
-                                                  } else {
-                                                    throw 'Could not launch';
-                                                  }
-                                                },
-                                                child: Row(
-                                                  //crossAxisAlignment: CrossAxisAlignment.center,
-                                                  mainAxisAlignment: MainAxisAlignment.center,
-                                                  children: [
-                                                    Icon(
-                                                      Icons.phone,
-                                                      color: Colors.green,
-                                                    ),
-                                                    Text(
-                                                      'ligar',
-                                                      style: TextStyle(color: Colors.green),
-                                                    )
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
 
 
+                                      descricaoWidget(),
 
-
-
-
-                                          ],
-                                        ),
-                                      ),
                                     ],
                                   ),
 
@@ -439,6 +212,422 @@ class _locaisDetalhesState extends State<locaisDetalhes> {
       
     );
   }
+
+
+
+
+
+  Widget descricaoWidget(){
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.only(
+            topRight: Radius.circular(25),
+            topLeft: Radius.circular(25)
+        ),
+        color: Color.fromRGBO(242, 242, 242, 1),
+      ),
+      child: Column(
+        children: <Widget>[
+
+          Divider(
+            height: 10,
+            color: Colors.transparent,
+          ),
+
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+
+              ///DIRETOR, SECRETÁRIA
+              jsonLocalAtual['diretor'] == null
+                  && jsonLocalAtual['vicediretor'] == null
+                  && jsonLocalAtual['secretaria'] == null ?
+                  //SE NAO TIVER DADOS CADASTRADOS
+              Container(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30),
+                    color: Colors.black12
+                    //border: Border.all(width: 3, color: Colors.black12)
+                ),
+                child: IconButton(
+                    icon: Icon(Icons.people, color: Colors.white),
+                    onPressed: () async {
+
+                    }
+                ),
+              )
+                  :
+              Container(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30),
+                    color: Colors.brown
+                    //border: Border.all(width: 3, color: Colors.brown)
+                ),
+                child: IconButton(
+                    icon: Icon(Icons.people, color: Colors.white),
+                    onPressed: () async {
+                      setState(() {
+                        //se ja estiver selecionado
+                        if(infoSelec == 1){
+                          infoSelec = 0;
+                        } else {
+                          infoSelec = 1;
+                        }
+                      });
+                    }
+                ),
+              ),
+
+
+              jsonLocalAtual['email'] == null ?
+              //SE NAO TIVER EMAIL CADASTRADO
+              Container(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30),
+                    color: Colors.black12
+                    //border: Border.all(width: 3, color: Colors.black12)
+                ),
+                child: IconButton(
+                    icon: Icon(Icons.email, color: Colors.white),
+                    onPressed: () async {
+
+                    }
+                ),
+              ) :
+              Container(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30),
+                    color: Colors.red
+                    //border: Border.all(width: 3, color: Colors.red)
+                ),
+                child: IconButton(
+                    icon: Icon(Icons.email, color: Colors.white),
+                    onPressed: () async {
+                      setState(() {
+                        //se ja estiver selecionado
+                        if(infoSelec == 2){
+                          infoSelec = 0;
+                        } else {
+                          infoSelec = 2;
+                        }
+                      });
+                    }
+                ),
+              ),
+
+
+              jsonLocalAtual['telefonede'] == null
+              && jsonLocalAtual['telefone'] == null
+                  && jsonLocalAtual['telefonede2'] == null
+                  && jsonLocalAtual['telefone2'] == null ?
+
+                  ///SE NAO TIVER NADA CADASTRADO
+              Container(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30),
+                    color: Colors.black12
+                    //border: Border.all(width: 3, color: Colors.black12)
+                ),
+                child: IconButton(
+                    icon: Icon(Icons.phone, color: Colors.white),
+                    onPressed: () async {
+
+                    }
+                ),
+              )
+                  :
+              Container(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30),
+                    color: Colors.green
+                    //border: Border.all(width: 3, color: Colors.green)
+                ),
+                child: IconButton(
+                    icon: Icon(Icons.phone, color: Colors.white),
+                    onPressed: () async {
+                      setState(() {
+                        //se ja estiver selecionado
+                        if(infoSelec == 3){
+                          infoSelec = 0;
+                        } else {
+                          infoSelec = 3;
+                        }
+                      });
+                    }
+                ),
+              ),
+
+            ],
+          ),
+
+
+
+          //infoSelec == 0 ? Container() :
+          infoSelec == 1 ? diretoria() :
+          infoSelec == 2 ? email() :
+          infoSelec == 3 ? telefone() :
+
+
+
+
+
+
+          Divider(
+            height: 30,
+            color: Colors.transparent,
+          ),
+
+          FlatButton(
+            padding: EdgeInsets.all(0),
+            onPressed: (){
+              //homeList();
+              var aux;
+              List salasList = List();
+              espacosLocalList.clear();
+
+              print(globals.jsonEspaco['espaco'].length);
+              for(int i=0; i<globals.jsonEspaco['espaco'].length; i++){
+                print('Codigo Local: ${globals.jsonEspaco['espaco'][i]['codlocal']}');
+                print('Codigo ataual: ${jsonLocalAtual['codigo']}');
+                if(jsonLocalAtual['codigo'] == globals.jsonEspaco['espaco'][i]['codlocal']){
+
+                  espacosLocalList.add(globals.jsonEspaco['espaco'][i]);
+                }
+
+              }
+
+              espacosLocal['espaco'] = espacosLocalList;
+              print('espacosLocal: $espacosLocal');
+
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => espacoPage(espacosLocal, false))
+              );
+            },
+
+            child: Container(
+              width: 150,
+              padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
+              decoration: BoxDecoration(
+                  color: Colors.blue,
+                  borderRadius: BorderRadius.circular(30),
+                  border: Border.all(color: Color(0xFF2d3447),width: 1)
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+                  Container(
+                    child: Text('SALAS/LABS', style: TextStyle(color: Colors.white),),
+                  ),
+                  Icon(Icons.fast_forward, color: Colors.white,),
+                ],
+              ),
+            ),
+          ),
+
+          Divider(
+            height: 30,
+            color: Colors.transparent,
+          ),
+
+          ///DESCRIÇÃO
+          ///
+
+          Text('DESCRIÇÃO', style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),),
+          Divider(
+            height: 20,
+            color: Colors.transparent,
+          ),
+          Container(
+            padding: EdgeInsets.only(left: 15, right: 15),
+            child: Text(jsonLocalAtual['historia'],
+              style: TextStyle(fontSize: 20,
+              ),
+              textAlign: TextAlign.justify,
+            ),
+          ),
+
+
+
+
+
+        ],
+      ),
+    );
+  }
+
+
+  Widget diretoria(){
+    return Container(
+
+      child: Column(
+        children: <Widget>[
+
+          /// VERIFICA SE TEM DIRETOR
+          jsonLocalAtual['diretor'] == null ? Container() :
+
+          Container(
+            padding: EdgeInsets.only(left: 15, right: 15, top: 15),
+            child: Text('Diretor: ${jsonLocalAtual['diretor']}',
+              style: TextStyle(fontSize: 20,
+              ),
+              textAlign: TextAlign.justify,
+            ),
+          ),
+
+          /// VERIFICA SE TEM VICE-DIRETOR
+          jsonLocalAtual['vicediretor'] == null ? Container() :
+
+          Container(
+            padding: EdgeInsets.only(left: 15, right: 15, top: 15),
+            child: Text('Vice-Diretor: ${jsonLocalAtual['vicediretor']}',
+              style: TextStyle(fontSize: 20,
+              ),
+              textAlign: TextAlign.justify,
+            ),
+          ),
+
+          /// VERIFICA SE TEM SECRETÁRIA
+          jsonLocalAtual['secretaria'] == null ? Container() :
+
+          Container(
+            padding: EdgeInsets.only(left: 15, right: 15, top: 15),
+            child: Text('Secretária: ${jsonLocalAtual['secretaria']}',
+              style: TextStyle(fontSize: 20,
+              ),
+              textAlign: TextAlign.justify,
+            ),
+          ),
+
+        ],
+      ),
+    );
+  }
+
+  Widget email(){
+    return
+      Container(
+        padding: EdgeInsets.only(left: 15, right: 15, top: 15),
+        child: Text('Email: ${jsonLocalAtual['email']}',
+          style: TextStyle(fontSize: 20,
+          ),
+          textAlign: TextAlign.justify,
+        ),
+      );
+  }
+
+
+  Widget telefone(){
+    return Column(
+      children: <Widget>[
+        /// VERIFICA SE TEM TELEFONEDE
+        jsonLocalAtual['telefonede'] == null ? Container() :
+
+        Container(
+          padding: EdgeInsets.only(left: 15, right: 15, top: 15),
+          child: Text('Contato 1: ${jsonLocalAtual['telefonede']}',
+            style: TextStyle(fontSize: 20,
+            ),
+            textAlign: TextAlign.justify,
+          ),
+        ),
+
+        /// VERIFICA SE TEM TELEFONE
+        jsonLocalAtual['telefone'] == null ? Container() :
+
+        Container(
+          height: 40,
+          margin: EdgeInsets.only(
+              left: 30, right: 30, bottom: 4, top: 15),
+          decoration: BoxDecoration(
+            //color: Color.fromRGBO(19, 104, 136, 1),
+            borderRadius: BorderRadius.circular(30),
+            border:
+            Border.all(color: Colors.green, width: 3.0),
+          ),
+          child: FlatButton(
+            onPressed: () async {
+              print('${jsonLocalAtual['telefone']}');
+              if (await canLaunch(
+                  'tel://+55${jsonLocalAtual['telefone']}')) {
+                await launch(
+                    'tel://+55${jsonLocalAtual['telefone']}');
+              } else {
+                throw 'Could not launch';
+              }
+            },
+            child: Row(
+              //crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.phone,
+                  color: Colors.green,
+                ),
+                Text(
+                  'ligar',
+                  style: TextStyle(color: Colors.green),
+                )
+              ],
+            ),
+          ),
+        ),
+
+        /// VERIFICA SE TEM TELEFONEDE 2
+        jsonLocalAtual['telefonede2'] == null ? Container() :
+
+        Container(
+          padding: EdgeInsets.only(left: 15, right: 15, top: 15),
+          child: Text('Contato 2: ${jsonLocalAtual['telefonede2']}',
+            style: TextStyle(fontSize: 20,
+            ),
+            textAlign: TextAlign.justify,
+          ),
+        ),
+
+        /// VERIFICA SE TEM TELEFONE 2
+        jsonLocalAtual['telefone2'] == null ? Container() :
+
+        Container(
+          height: 40,
+          margin: EdgeInsets.only(
+              left: 30, right: 30, bottom: 4, top: 15),
+          decoration: BoxDecoration(
+            //color: Color.fromRGBO(19, 104, 136, 1),
+            borderRadius: BorderRadius.circular(30),
+            border:
+            Border.all(color: Colors.green, width: 3.0),
+          ),
+          child: FlatButton(
+            onPressed: () async {
+              print('${jsonLocalAtual['telefone2']}');
+              if (await canLaunch(
+                  'tel://+55${jsonLocalAtual['telefone2']}')) {
+                await launch(
+                    'tel://+55${jsonLocalAtual['telefone2']}');
+              } else {
+                throw 'Could not launch';
+              }
+            },
+            child: Row(
+              //crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.phone,
+                  color: Colors.green,
+                ),
+                Text(
+                  'ligar',
+                  style: TextStyle(color: Colors.green),
+                )
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
 }
 
 class imageView extends StatelessWidget {

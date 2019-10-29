@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "520443845903",
+    "firebase_url": "https://guiaunifei-e9a65.firebaseio.com",
+    "project_id": "guiaunifei-e9a65",
+    "storage_bucket": "guiaunifei-e9a65.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:520443845903:android:6e57851482d1007f3d727a",
+        "android_client_info": {
+          "package_name": "com.tobiasarantes.guia_unifei"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "520443845903-q5kndlr44bhd861vilmgq816i9u6tbq2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBHK8F52eKIBEgyAgibz7Xiwx_CYuzGG-0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "520443845903-q5kndlr44bhd861vilmgq816i9u6tbq2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
