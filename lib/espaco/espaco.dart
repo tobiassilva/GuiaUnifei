@@ -110,6 +110,9 @@ class _espacoPageState extends State<espacoPage> {
             shrinkWrap: true,
             physics: ScrollPhysics(),
             children: <Widget>[
+              veioDaHome == false ? Container():Divider(
+                height: 210,
+              ),
               Divider(
                 height: searchNSelec == false ? 70 : 5,
                 color: Colors.transparent,
@@ -155,72 +158,83 @@ class _espacoPageState extends State<espacoPage> {
                   );
                 },
               ),
+              Divider(
+                height: 20,
+                color: Colors.transparent,
+              ),
             ],
           ),
 
 
           /// SEARCH
-          Container(
-            margin: EdgeInsets.only(top: 10),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: searchNSelec == false ?  MainAxisAlignment.spaceAround
-                  : MainAxisAlignment.end,
-              children: <Widget>[
-                searchNSelec == false ? Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(30),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black26,
-                          blurRadius: 20.0, // has the effect of softening the shadow
-                          spreadRadius: 2.0, // has the effect of extending the shadow
-                          offset: Offset(
-                            10.0, // horizontal, move right 10
-                            10.0, // vertical, move down 10
-                          ),
-                        )
-                      ],
+          Column(
+            children: <Widget>[
+              veioDaHome == false ? Container():Divider(
+                height: 210,
+              ),
+              Container(
+                margin: EdgeInsets.only(top: 10), ///TODO: MUDAR PARA VERIFICAR SE VEIO DA HOME
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: searchNSelec == false ?  MainAxisAlignment.spaceAround
+                      : MainAxisAlignment.end,
+                  children: <Widget>[
+                    searchNSelec == false ? Expanded(
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(30),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black26,
+                              blurRadius: 20.0, // has the effect of softening the shadow
+                              spreadRadius: 2.0, // has the effect of extending the shadow
+                              offset: Offset(
+                                10.0, // horizontal, move right 10
+                                10.0, // vertical, move down 10
+                              ),
+                            )
+                          ],
 
-                    ),
-                    child: new TextField(
-                      onChanged: (value) {
-                        filterSearchResults(value);
-                      },
-                      controller: editingController,
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        //labelText: "LDC2",
-                        hintText: "LDC2",
-                        prefixIcon: Icon(Icons.search),
-                        /*border: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(25.0)))*/
+                        ),
+                        child: new TextField(
+                          onChanged: (value) {
+                            filterSearchResults(value);
+                          },
+                          controller: editingController,
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            //labelText: "LDC2",
+                            hintText: "LDC2",
+                            prefixIcon: Icon(Icons.search),
+                            /*border: OutlineInputBorder(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(25.0)))*/
+                          ),
+                        ),
+                      ),
+                    ): Container(),
+                    Container(
+                      margin: EdgeInsets.only(left: 15),
+                      child: FloatingActionButton(
+                        backgroundColor: Colors.blue,
+                        onPressed: (){
+                          setState(() {
+                            if(searchNSelec == false){
+                              searchNSelec = true;
+                            } else {
+                              searchNSelec = false;
+                            }
+                          });
+                        },
+                        child: searchNSelec == false ? Icon(Icons.close)
+                            : Icon(Icons.search),
                       ),
                     ),
-                  ),
-                ): Container(),
-                Container(
-                  margin: EdgeInsets.only(left: 15),
-                  child: FloatingActionButton(
-                    backgroundColor: Colors.blue,
-                    onPressed: (){
-                      setState(() {
-                        if(searchNSelec == false){
-                          searchNSelec = true;
-                        } else {
-                          searchNSelec = false;
-                        }
-                      });
-                    },
-                    child: searchNSelec == false ? Icon(Icons.close)
-                        : Icon(Icons.search),
-                  ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ],
       ),
