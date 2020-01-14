@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:guia_unifei/espaco/espacoDetalhe.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
@@ -70,10 +71,11 @@ class _espacoPageState extends State<espacoPage> {
     for(int i = 0; i<jsonEspacos['espaco'].length; i++){
       if(jsonEspacos['espaco'][i]['nome'] == valor){
         ///chama a Página do item selecionado correspondente
-        Navigator.of(context).push(MaterialPageRoute(
+        print(valor);
+        /*Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => espacoDetalhe(jsonEspacos['espaco'][i]))
-        );
-
+        );*/
+        _professorDialog(jsonEspacos['espaco'][i]);
       }
     }
   }
@@ -159,7 +161,7 @@ class _espacoPageState extends State<espacoPage> {
                 },
               ),
               Divider(
-                height: 20,
+                height: 60,
                 color: Colors.transparent,
               ),
             ],
@@ -241,5 +243,359 @@ class _espacoPageState extends State<espacoPage> {
       //),
       //),
     );
+  }
+
+
+
+
+  /// DIALOG DE INFOS DA SALA
+  Future<bool> _onWillPop() {
+    Navigator.of(context).pop(false);
+    print("Teste");
+  }
+
+  Future<void> _professorDialog(var jsonEspEscolhido) async {
+    //var jsonEspEscolhido = value.split('.');
+    var nomeEsp = jsonEspEscolhido['nome'];
+    print(nomeEsp.split("."));
+    var partes = nomeEsp.split(".");
+    print(partes[3]);
+    return showDialog(
+      builder: (BuildContext context) {
+        return MaterialApp(
+          home: WillPopScope(
+            onWillPop: _onWillPop,
+            child: Scaffold(
+              backgroundColor: Colors.transparent,
+              body: Center(
+                child: Container(
+                  //margin: EdgeInsets.fromLTRB(30, 45, 30, 40),
+                  width: MediaQuery.of(context).size.width/1.15,
+                  height: MediaQuery.of(context).size.height/1.30,
+                  decoration: new BoxDecoration(
+                      color: Colors.white,
+                      border: new Border.all(
+                        width: 1.0,
+                        color: Colors.transparent,
+                      ),
+                      borderRadius:
+                      new BorderRadius.all(new Radius.circular(20.0))),
+                  child: Column(
+                      children: <Widget>[
+                        Container(
+                          height: 40,
+                          decoration: new BoxDecoration(
+                              color: Color(0xFF2d3447),
+                              borderRadius: new BorderRadius.only(
+                                  topLeft: Radius.circular(20.0),
+                                  topRight: Radius.circular(20.0))),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: <Widget>[
+                              FlatButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: Icon(
+                                  IconData(57676, fontFamily: 'MaterialIcons'),
+                                  color: Colors.white,),
+                              )
+                            ],
+                          ),
+                        ),
+
+
+                        /// PRÉDIO
+                        Container(
+                          margin: EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 10),
+                          height: 80,
+                          width: MediaQuery
+                              .of(context).size.width / 1.15,
+
+                          child: Stack(
+                              children: <Widget>[
+
+                                Center(
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: <Widget>[
+
+                                      Expanded(
+                                        child: Container(
+                                          padding: EdgeInsets.fromLTRB(85, 5, 10, 5),
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius: BorderRadius.circular(28),
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: Colors.black26,
+                                                blurRadius: 20.0, // has the effect of softening the shadow
+                                                spreadRadius: 2.0, // has the effect of extending the shadow
+                                                offset: Offset(
+                                                  10.0, // horizontal, move right 10
+                                                  10.0, // vertical, move down 10
+                                                ),
+                                              )
+                                            ],
+
+                                          ),
+                                          child: SelectableText("PRÉDIO:   ${partes[0]}",
+                                            style: TextStyle(fontSize: 16),
+                                            textAlign: TextAlign.justify,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: <Widget>[
+                                    Container(
+                                      //margin: EdgeInsets.only(right: 20),
+                                      width: 76,
+                                      height: 76,
+                                      decoration: BoxDecoration(
+                                        color: Colors.transparent,
+                                        borderRadius:
+                                        BorderRadius.all(Radius.circular(15)),
+                                      ),
+                                      child: FloatingActionButton(
+                                        onPressed: null,
+                                        child: Icon(FontAwesomeIcons.city, size: 35,),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+
+
+                              ]
+                          ),
+                        ),
+
+
+                        /// BLOCO
+                        Container(
+                          margin: EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 10),
+                          height: 80,
+                          width: MediaQuery
+                              .of(context).size.width / 1.15,
+
+                          child: Stack(
+                              children: <Widget>[
+
+                                Center(
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: <Widget>[
+
+                                      Expanded(
+                                        child: Container(
+                                          padding: EdgeInsets.fromLTRB(10, 5, 85, 5),
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius: BorderRadius.circular(28),
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: Colors.black26,
+                                                blurRadius: 20.0, // has the effect of softening the shadow
+                                                spreadRadius: 2.0, // has the effect of extending the shadow
+                                                offset: Offset(
+                                                  10.0, // horizontal, move right 10
+                                                  10.0, // vertical, move down 10
+                                                ),
+                                              )
+                                            ],
+
+                                          ),
+                                          child: SelectableText("BLOCO: ${partes[0]}.${partes[1]}",
+                                            style: TextStyle(fontSize: 16),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+
+
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: <Widget>[
+                                    Container(
+                                      //margin: EdgeInsets.only(right: 20),
+                                      width: 76,
+                                      height: 76,
+                                      decoration: BoxDecoration(
+                                        color: Colors.transparent,
+                                        borderRadius:
+                                        BorderRadius.all(Radius.circular(15)),
+                                      ),
+                                      child: FloatingActionButton(
+                                        onPressed: null,
+                                        child: Icon(FontAwesomeIcons.building, size: 35,),
+                                        backgroundColor: Colors.red,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+
+
+                              ]
+                          ),
+                        ),
+
+
+                        /// ANDAR
+                        Container(
+                          margin: EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 10),
+                          height: 80,
+                          width: MediaQuery
+                              .of(context).size.width / 1.15,
+
+                          child: Stack(
+                              children: <Widget>[
+
+                                Center(
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: <Widget>[
+
+                                      Expanded(
+                                        child: Container(
+                                          padding: EdgeInsets.fromLTRB(85, 5, 10, 5),
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius: BorderRadius.circular(28),
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: Colors.black26,
+                                                blurRadius: 20.0, // has the effect of softening the shadow
+                                                spreadRadius: 2.0, // has the effect of extending the shadow
+                                                offset: Offset(
+                                                  10.0, // horizontal, move right 10
+                                                  10.0, // vertical, move down 10
+                                                ),
+                                              )
+                                            ],
+
+                                          ),
+                                          child: SelectableText("ANDAR: ${partes[2]}",
+                                            style: TextStyle(fontSize: 16),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: <Widget>[
+                                    Container(
+                                      //margin: EdgeInsets.only(right: 20),
+                                      width: 76,
+                                      height: 76,
+                                      decoration: BoxDecoration(
+                                        color: Colors.transparent,
+                                        borderRadius:
+                                        BorderRadius.all(Radius.circular(15)),
+                                      ),
+                                      child: FloatingActionButton(
+                                        onPressed: null,
+                                        child: Icon(FontAwesomeIcons.walking, size: 35,),
+                                        backgroundColor: Colors.brown,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+
+
+                              ]
+                          ),
+                        ),
+
+
+
+                        /// SALA
+                        Container(
+                          margin: EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 10),
+                          height: 80,
+                          width: MediaQuery
+                              .of(context).size.width / 1.15,
+
+                          child: Stack(
+                              children: <Widget>[
+
+                                Center(
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: <Widget>[
+
+                                      Expanded(
+                                        child: Container(
+                                          padding: EdgeInsets.fromLTRB(10, 5, 85, 5),
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius: BorderRadius.circular(28),
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: Colors.black26,
+                                                blurRadius: 20.0, // has the effect of softening the shadow
+                                                spreadRadius: 2.0, // has the effect of extending the shadow
+                                                offset: Offset(
+                                                  10.0, // horizontal, move right 10
+                                                  10.0, // vertical, move down 10
+                                                ),
+                                              )
+                                            ],
+
+                                          ),
+                                          child: SelectableText("SALA:   ${partes[3]}",
+                                            style: TextStyle(fontSize: 16),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+
+
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: <Widget>[
+                                    Container(
+                                      //margin: EdgeInsets.only(right: 20),
+                                      width: 76,
+                                      height: 76,
+                                      decoration: BoxDecoration(
+                                        color: Colors.transparent,
+                                        borderRadius:
+                                        BorderRadius.all(Radius.circular(15)),
+                                      ),
+                                      child: FloatingActionButton(
+                                        onPressed: null,
+                                        child: Icon(FontAwesomeIcons.chalkboardTeacher, size: 35,),
+                                        backgroundColor: Colors.green,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+
+
+                              ]
+                          ),
+                        ),
+
+
+                      ]),
+                ),
+              ),
+            ),)
+          ,
+        );
+      },
+      context: context);
   }
 }

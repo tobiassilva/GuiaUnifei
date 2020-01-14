@@ -56,6 +56,7 @@ class _MyHomePageState extends State<MyHomePage> {
     this.getTipoLocais();
     this.getEspacos();
     this.getTipoEspaco();
+    this.getProfessor();
 
     print('aaaaaaaaaaaaa');
 
@@ -105,6 +106,11 @@ class _MyHomePageState extends State<MyHomePage> {
     return File('$path/tipoEspaco.txt');
   }
 
+  ///PROFESSOR
+  Future<File> get _localFileProfessor async {
+    final path = await _localPath;
+    return File('$path/professor.txt');
+  }
 
   //Verifica se está conectado na internet
   Future<bool> verificaConeccao() async {
@@ -329,13 +335,9 @@ class _MyHomePageState extends State<MyHomePage> {
   ///RECEBE O JSON DOS TIPOS DE ESPACOS
   Future<void> getTipoEspaco() async {
     var coneccao = await verificaConeccao();
-    print('SSSSSSSSSSSSSSSSSSSSS');
 
     if(coneccao == false){ //se estiver conectado
-
-
       var snapshot1 = conexao.subscription(tipoEspacoSubdescription, variables: {
-
       });
 
       snapshot1.stream.listen((data) async {
@@ -363,6 +365,55 @@ class _MyHomePageState extends State<MyHomePage> {
         globals.jsonTipoEspaco = jsonDecode(contents);
 
         print('globals.jsonTipoEspaco: ${globals.jsonTipoEspaco}');
+        setState(() {
+          leituraBanco = true; //tira o temporizador e abre a HOME
+        });
+      } catch (e) { //se nao tem internet e nao existe o arquivo
+        setState(() { //tira o temporizador e mostra alert de solicitação de internet
+          leituraBanco = true;
+          primeiroAcesso = true;
+        });
+      }
+    }
+
+  }
+
+  ///RECEBE O JSON DOS PROFESSORES
+  Future<void> getProfessor() async {
+    var coneccao = await verificaConeccao();
+    print('SSSSSSSSSSSSSSSSSSSSS');
+
+    if(coneccao == false){ //se estiver conectado
+
+      var snapshot1 = conexao.subscription(professorSubdescription, variables: {
+
+      });
+
+      snapshot1.stream.listen((data) async {
+        print('data: $data');
+        setState(() {
+          globals.jsonProfessor = data['data'];
+          leituraBanco = true;
+        });
+
+        ///GRAVANDO DADOS EM UM ARQUIVO
+        final file = await _localFileProfessor;
+        String aux = jsonEncode(data['data']);
+        // GRAVA NO ARQUIVO
+        file.writeAsString('$aux');
+        print('aux: $aux');
+      });
+    } else {
+      try {
+        final file = await _localFileProfessor;
+
+        // Read the file
+        String contents = await file.readAsString();
+
+        print('contents: $contents');
+        globals.jsonProfessor = jsonDecode(contents);
+
+        print('globals.jsonProfessor: ${globals.jsonProfessor}');
         setState(() {
           leituraBanco = true; //tira o temporizador e abre a HOME
         });
@@ -448,6 +499,20 @@ class _MyHomePageState extends State<MyHomePage> {
         }
       }
     """;
+
+
+  String professorSubdescription = """ 
+    subscription {
+      professor {
+        codigo
+        codlocal
+        email
+        nome
+        sala
+        telefone
+      }
+    }
+  """;
 
   void goHome() async {
     Navigator.of(context).pushReplacement(new MaterialPageRoute(

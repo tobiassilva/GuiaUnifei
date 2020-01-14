@@ -7,6 +7,11 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:convert';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
+import 'package:guia_unifei/professores/professores.dart';
+import 'package:guia_unifei/qrCode/qrCode.dart';
+import 'package:guia_unifei/tabs/menu.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class homeList extends StatefulWidget {
   @override
@@ -34,45 +39,9 @@ class _homeListState extends State<homeList> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
+        //drawer: drawer(),
         backgroundColor: Color.fromRGBO(242, 242, 242, 1),
-        /*appBar: AppBar(
-          backgroundColor: Color(0xFF2d3447),
-          leading: IconButton(
-              icon: Icon(Icons.menu),
-              onPressed: (){
-                //Navigator.pop(context);
-              }
-          ),
-          /*bottom: TabBar(    // TabBar
-            controller: _tabController,
-            indicatorColor: Colors.white,
-            indicatorWeight: 2,
-              //controller: _tabController,
-            tabs: <Widget>[
-              Tab(
-                child: new Text(
-                  "BLOCOS",
-                  style: const TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w600,
-                      fontFamily: "Gibson",
-                      fontStyle: FontStyle.normal,
-                      fontSize: 15),
-                ),
 
-              ),
-              Tab(
-                child: new Text("SALAS / LABS",
-                    style: const TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w600,
-                        fontFamily: "Gibson",
-                        fontStyle: FontStyle.normal,
-                        fontSize: 15.0)),
-              ),
-            ],
-          ),*/
-        ),*/
         body: Stack(
           ///AAAAAAAAAAAAAAPPPPPPPPPPPPPAAAAGGGGGGGGGGAAAAAAAAAAA AAAAAAAQQQQQUUUUUUUIIIIIIIIIIIIIIIII
           children: <Widget>[
@@ -87,6 +56,7 @@ class _homeListState extends State<homeList> {
 
                   locaisList(),
                   espacoPage(globals.jsonEspaco, true),
+                  //qrCode()
 
 
                 ],
@@ -112,54 +82,84 @@ class _homeListState extends State<homeList> {
 
 
 
-                Container(
-                  padding: EdgeInsets.only(top: 150),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      ClipRRect(
-                          borderRadius: BorderRadius.circular(50.0),
-                          child: Container(
-                            width: MediaQuery.of(context).size.width/1.3,
-                            decoration: new BoxDecoration(
-                              color: Color.fromRGBO(45, 52, 71, 0.95),
-                              //borderRadius: BorderRadius.circular(30)
+                Column(
+                  children: <Widget>[
+                    /*Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        IconButton(
+                          padding: EdgeInsets.fromLTRB(20, 20, 0, 0),
+                            icon: Icon(
+                              Icons.menu,
+                              color: Colors.white,
+                              size: 30,
                             ),
-                            height: 40,
-                            //width: MediaQuery.of(context).size.width,
-                            child: TabBar(    // TabBar
-                              controller: _tabController,
-                              indicatorColor: Colors.white,
-                              //indicatorWeight: 2,
-                              //controller: _tabController,
-                              tabs: <Widget>[
-                                Tab(
-                                  child: new Text(
-                                    "BLOCOS",
-                                    style: const TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w600,
-                                        fontFamily: "Gibson",
-                                        fontStyle: FontStyle.normal,
-                                        fontSize: 15),
-                                  ),
+                            onPressed: (){
 
-                                ),
-                                Tab(
-                                  child: new Text("SALAS/LABS",
-                                      style: const TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w600,
-                                          fontFamily: "Gibson",
-                                          fontStyle: FontStyle.normal,
-                                          fontSize: 15.0)),
-                                ),
-                              ],
-                            ),
-                          ),
+                            }
                         ),
-                    ],
-                  ),
+                      ],
+                    ),*/
+                    Container(
+                      padding: EdgeInsets.only(top: 150),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          ClipRRect(
+                              borderRadius: BorderRadius.circular(50.0),
+                              child: Container(
+                                width: MediaQuery.of(context).size.width/1.1,
+                                decoration: new BoxDecoration(
+                                  color: Color.fromRGBO(45, 52, 71, 0.95),
+                                  //borderRadius: BorderRadius.circular(30)
+                                ),
+                                height: 40,
+                                //width: MediaQuery.of(context).size.width,
+                                child: TabBar(    // TabBar
+                                  controller: _tabController,
+                                  indicatorColor: Colors.white,
+                                  //indicatorWeight: 2,
+                                  //controller: _tabController,
+                                  tabs: <Widget>[
+                                    Tab(
+                                      child: new Text(
+                                        "BLOCOS",
+                                        style: const TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w600,
+                                            fontFamily: "Gibson",
+                                            fontStyle: FontStyle.normal,
+                                            fontSize: 15),
+                                      ),
+
+                                    ),
+                                    Tab(
+                                      child: new Text("SALAS/LABS",
+                                          style: const TextStyle(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w600,
+                                              fontFamily: "Gibson",
+                                              fontStyle: FontStyle.normal,
+                                              fontSize: 15.0),
+                                      textAlign: TextAlign.center,),
+                                    ),
+                                    /*Tab(
+                                      child: new Text("QR-CODE",
+                                          style: const TextStyle(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w600,
+                                              fontFamily: "Gibson",
+                                              fontStyle: FontStyle.normal,
+                                              fontSize: 15.0)),
+                                    ),*/
+                                  ],
+                                ),
+                              ),
+                            ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
 
 
@@ -224,6 +224,67 @@ class _homeListState extends State<homeList> {
 
             ],
           ),
+        ),*/
+        floatingActionButton: SpeedDial(
+          marginRight: 25,
+          marginBottom: 5,
+          animatedIcon: AnimatedIcons.menu_close,
+          animatedIconTheme: IconThemeData(size: 23.0, color: Colors.white),
+          closeManually: false,
+          curve: Curves.bounceIn,
+          overlayColor: Colors.black,
+          overlayOpacity: 0.5,
+          onOpen: () => print('OPENING DIAL'),
+          onClose: () => print('DIAL CLOSED'),
+          tooltip: 'Speed Dial',
+          heroTag: 'speed-dial-hero-tag',
+
+          backgroundColor: Color(0xFF2d3447),
+          foregroundColor: Colors.black,
+
+          shape: CircleBorder(),
+          elevation: 50.0,
+          children: [
+            SpeedDialChild(
+                child: Icon(FontAwesomeIcons.chalkboardTeacher),
+                backgroundColor: Colors.red,
+                label: 'Professores',
+                labelStyle: TextStyle(fontSize: 18.0),
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => professores()));
+                }
+            ),
+            SpeedDialChild(
+              child: Icon(FontAwesomeIcons.qrcode),
+              backgroundColor: Colors.blue,
+              label: 'QRcode',
+              labelStyle: TextStyle(fontSize: 18.0),
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => qrCode()));
+                }
+            ),
+            SpeedDialChild(
+              child: Icon(FontAwesomeIcons.home),
+              backgroundColor: Colors.green,
+              label: 'Home',
+              labelStyle: TextStyle(fontSize: 18.0),
+              onTap: () => print('THIRD CHILD'),
+            ),
+          ],
+        ),
+
+        /*FloatingActionButton(
+          onPressed: () => setState(() {
+          }),
+          tooltip: 'Increment Counter',
+          child: Icon(Icons.add),
+        ),*/
+          //floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        /*bottomNavigationBar: BottomAppBar(
+          shape: const CircularNotchedRectangle(),
+          child: Container(height: 50.0,),
         ),*/
       ),
     );
