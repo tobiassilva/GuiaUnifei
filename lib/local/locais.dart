@@ -294,7 +294,7 @@ class _locaisListState extends State<locaisList> {
           ),
 
           Divider(
-            height: 50,
+            height: 100,
             color: Colors.transparent,
           ),
         ],
