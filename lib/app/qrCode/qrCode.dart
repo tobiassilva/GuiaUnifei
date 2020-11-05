@@ -1,7 +1,7 @@
 import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:guia_unifei/local/LocaisDetalhes.dart';
+import 'package:guia_unifei/app/local/LocaisDetalhes.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'dart:async';
 import 'package:qrcode_reader/qrcode_reader.dart';

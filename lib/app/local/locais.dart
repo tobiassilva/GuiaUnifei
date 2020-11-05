@@ -1,12 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:guia_unifei/local/LocaisDetalhes.dart';
+import 'package:guia_unifei/app/local/LocaisDetalhes.dart';
 import 'dart:async';
-import 'dart:convert';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:guia_unifei/globals.dart' as globals;
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:guia_unifei/mapa.dart';
+import 'file:///C:/Users/tobia/OneDrive/Documentos/Programas/Flutter/GuiaUnifei/GuiaUnifei/lib/app/mapa.dart';
 import 'package:localstorage/localstorage.dart';
 
 class locaisList extends StatefulWidget {
@@ -94,9 +92,8 @@ class _locaisListState extends State<locaisList> {
                         scrollDirection: Axis.horizontal,
                         itemCount: globals.jsonTipoLocal['tipolocal'].length,
                         itemBuilder: (BuildContext context, index){
-                          return FlatButton(
-                            padding: EdgeInsets.all(0),
-                            onPressed: () {
+                          return GestureDetector(
+                            onTap: () {
                               filtroLocal(globals.jsonTipoLocal['tipolocal'][index]);
                             },
                             child: Container(
@@ -122,9 +119,8 @@ class _locaisListState extends State<locaisList> {
                           itemBuilder: (context, index) {
                             return Container(
                               margin: EdgeInsets.only(left: 20),
-                              child: FlatButton(
-                                padding: EdgeInsets.all(0),
-                                onPressed: () {
+                              child: GestureDetector(
+                                onTap: () {
                                   filtroLocal(null);
                                 },
                                 child: Container(

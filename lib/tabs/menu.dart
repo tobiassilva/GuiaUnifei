@@ -1,8 +1,8 @@
 
 
 import 'package:flutter/material.dart';
-import 'package:guia_unifei/home/homeList.dart';
-import 'package:guia_unifei/qrCode/qrCode.dart';
+import 'package:guia_unifei/app/home/homeList.dart';
+import 'package:guia_unifei/app/qrCode/qrCode.dart';
 
 class drawer extends StatelessWidget {
   @override
