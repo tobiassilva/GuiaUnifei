@@ -1,25 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:guia_unifei/espaco/espacoDetalhe.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 
-class espacoPage extends StatefulWidget {
+class EspacoPage extends StatefulWidget {
   var jsonEspacos;
   bool veioDaHome;
 
-  espacoPage(this.jsonEspacos, this.veioDaHome);
+  EspacoPage(this.jsonEspacos, this.veioDaHome);
 
   ///pode receber uma lista de espaços especificos (de um bloco, etc)
 
   @override
-  _espacoPageState createState() => _espacoPageState(jsonEspacos, veioDaHome);
+  _EspacoPageState createState() => _EspacoPageState(jsonEspacos, veioDaHome);
 }
 
-class _espacoPageState extends State<espacoPage> {
+class _EspacoPageState extends State<EspacoPage> {
   var jsonEspacos;
   bool veioDaHome;
 
-  _espacoPageState(this.jsonEspacos, this.veioDaHome);
+  _EspacoPageState(this.jsonEspacos, this.veioDaHome);
 
   List items = List<String>();
   List itemsOrigin = List<String>();

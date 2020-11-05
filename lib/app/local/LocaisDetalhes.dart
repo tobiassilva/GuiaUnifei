@@ -1,11 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:guia_unifei/espaco/espaco.dart';
+import 'package:guia_unifei/app/espaco/espaco.dart';
 import 'package:guia_unifei/globals.dart' as globals;
-import 'dart:async';
 import 'package:flutter_swiper/flutter_swiper.dart';
-import 'package:guia_unifei/mapa.dart';
+import 'file:///C:/Users/tobia/OneDrive/Documentos/Programas/Flutter/GuiaUnifei/GuiaUnifei/lib/app/mapa.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class locaisDetalhes extends StatefulWidget {
@@ -401,7 +399,7 @@ class _locaisDetalhesState extends State<locaisDetalhes> {
               print('espacosLocal: $espacosLocal');
 
               Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => espacoPage(espacosLocal, false))
+                  MaterialPageRoute(builder: (context) => EspacoPage(espacosLocal, false))
               );
             },
 

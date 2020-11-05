@@ -1,14 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:guia_unifei/espaco/espaco.dart';
-import 'package:guia_unifei/local/locais.dart';
+import 'package:guia_unifei/app/espaco/espaco.dart';
+import 'package:guia_unifei/app/local/locais.dart';
 import 'package:guia_unifei/globals.dart' as globals;
 import 'dart:async';
 import 'dart:io';
 import 'dart:convert';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
-import 'package:guia_unifei/professores/professores.dart';
-import 'package:guia_unifei/qrCode/qrCode.dart';
+import 'package:guia_unifei/app/professores/professores.dart';
+import 'package:guia_unifei/app/qrCode/qrCode.dart';
 import 'package:guia_unifei/tabs/menu.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -55,7 +55,7 @@ class _homeListState extends State<homeList> {
                 children: <Widget>[
 
                   locaisList(),
-                  espacoPage(globals.jsonEspaco, true),
+                  EspacoPage(globals.jsonEspaco, true),
                   //qrCode()
 
 
