@@ -1,13 +1,25 @@
 # Guia Unifei
 
-<h2>Guia Unifei é um app voltado para toda a comunidade Unifei (alunos, professores, servidores, etc.), o objetivo é ajudar com localizações e informações da nossa Universidade</h2>
+<h3>Guia Unifei é um app voltado para toda a comunidade Unifei (alunos, professores, servidores, etc.), o objetivo é ajudar com localizações, informações e muito mais sobre a nossa Universidade</h3>
+<\br>
 
-> Abaixo algumas telas do app
+<h5>Abaixo algumas telas do app</h5>
+<\br>
+> Home (Locais)
 
 <div style="display: inline-block">
   <img src="/assets/images/telas/home1.jpeg" height="250">
   <img src="/assets/images/telas/home2.jpeg" height="250">  
 </div>
+
+> Home (Salas)
+
+<div style="display: inline-block">
+  <img src="/assets/images/telas/salas.jpeg" height="250">
+  <img src="/assets/images/telas/sala_filtro.jpeg" height="250">
+  <img src="/assets/images/telas/sala_detalhes.jpeg" height="250">
+</div>
+
 
 A new Flutter application.
 
