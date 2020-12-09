@@ -1,7 +1,10 @@
-# guia_unifei
+# Guia Unifei
 
-<img src="/assets/images/telas/home1.jpeg" height="250">
-<img src="/assets/images/telas/home2.jpeg" height="250">
+
+<div style="display: inline-block">
+  <img src="/assets/images/telas/home1.jpeg" height="250">
+  <img src="/assets/images/telas/home2.jpeg" height="250">  
+</div>
 
 A new Flutter application.
 
