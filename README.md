@@ -1,6 +1,6 @@
 # guia_unifei
 
-<img src="/assets/images/telas/home1.jpeg">
+<img src="/assets/images/telas/home1.jpeg" height="150">
 
 A new Flutter application.
 
