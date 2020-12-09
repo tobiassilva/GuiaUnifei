@@ -1,6 +1,6 @@
 # Guia Unifei
 
-<h3>🚀Guia Unifei é um app voltado para toda a comunidade Unifei (alunos, professores, servidores, etc.), o objetivo é ajudar com localizações, informações e muito mais sobre a nossa Universidade</h3>
+<p align="center">🚀Guia Unifei é um app voltado para toda a comunidade Unifei (alunos, professores, servidores, etc.), o objetivo é ajudar com localizações, informações e muito mais sobre a nossa Universidade</p>
 <br>
 
 <h4 align="center"> 
