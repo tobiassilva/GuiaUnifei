@@ -1,5 +1,7 @@
 # guia_unifei
 
+<img src="/assets/images/telas/home1.jpeg">
+
 A new Flutter application.
 
 ## Getting Started
